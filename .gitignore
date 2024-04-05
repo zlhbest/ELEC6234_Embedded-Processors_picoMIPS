@@ -1,2 +1,9 @@
+# modelsim的文件夹
 /work
+# vscode的文件夹
 /.vscode
+
+# quartus 的文件夹
+/db
+picoMIPS.qpf
+picoMIPS.qsf
