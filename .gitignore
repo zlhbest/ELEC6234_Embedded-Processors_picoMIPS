@@ -5,5 +5,4 @@
 
 # quartus 的文件夹
 /db
-picoMIPS.qpf
-picoMIPS.qsf
+picoMIPS.*
