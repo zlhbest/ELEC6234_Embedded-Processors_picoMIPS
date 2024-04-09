@@ -1,5 +1,8 @@
 # modelsim的文件夹
 /work
+*.vcd
+transcript
+*.wlf
 # vscode的文件夹
 /.vscode
 
