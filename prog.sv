@@ -14,7 +14,7 @@ module prog #(
 
   // 加载指令到内存中  这里也可以是txt文件
   initial begin
-    $readmemb("prog.bin", progMem);
+    $readmemb("prog_test.bin", progMem);
   end
 
   // 赋值

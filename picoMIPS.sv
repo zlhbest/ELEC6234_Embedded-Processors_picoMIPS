@@ -1,8 +1,9 @@
 module picoMIPS #(
     parameter n = 8
 ) (
-    input logic clk,
-    input logic reset
+    input  logic         clk,
+    input  logic         reset,
+    output logic [n-1:0] display
 );
 
   // ALU单元
@@ -66,7 +67,7 @@ module picoMIPS #(
   ) ALU (
       .a      (Rdata1),
       .b      (b_or_imm),
-      .ALUFunc(ALUFunc),
+      .ALUFunc(ALUfunc),
       .result (Wdata)
   );
 
@@ -75,4 +76,7 @@ module picoMIPS #(
     if (imm) b_or_imm = instruction_code[n-1:0];
     else b_or_imm = Rdata2;
   end
+
+  // 展示ALU中的结果
+  assign display = Wdata;
 endmodule
