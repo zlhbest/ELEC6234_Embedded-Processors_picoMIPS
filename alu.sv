@@ -17,6 +17,7 @@ module alu #(
       end
       `MUL: begin
         m      = a * b;
+        // 如果是14：7 就代表舍弃小数部分 只计算整数部分
         result = m[2*n-2 : n-1];
       end
     endcase

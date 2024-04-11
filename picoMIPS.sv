@@ -3,6 +3,7 @@ module picoMIPS #(
 ) (
     input  logic         clk,
     input  logic         reset,
+    input  logic         sw8,
     output logic [n-1:0] display
 );
 
@@ -19,6 +20,10 @@ module picoMIPS #(
   parameter Psize = 4;  // 代表该程序能所有多少行的代码 4代表能搜索 2^4行代码
   logic             PCincr;  // 控制是否移位
   logic [Psize-1:0] ProgAddress;  // 读取的程序地址
+  // 开关关下来的时候 pc指示变成1
+  always_ff @(negedge sw8) begin
+    PCincr <= 1'b1;
+  end
   pc #(
       .Psize(Psize)
   ) progCounter (

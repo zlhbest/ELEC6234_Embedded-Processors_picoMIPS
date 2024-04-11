@@ -2,7 +2,7 @@
 module decoder (
     input  logic [2:0] opcode,   // 操作数
     output logic [1:0] ALUFunc,  // ALU函数
-    output logic       PCincr,   // PC control
+    output logic       PCincr,   // PC control 是否读取下一行
     output logic       imm,      //是读取立即数还是寄存器
     output logic       write     //是否写入寄存器
 );
@@ -11,16 +11,25 @@ module decoder (
     ALUFunc = opcode[1:0];  // 操作数的后两位变成了ALU的函数
     imm     = 1'b0;
     write   = 1'b0;
-    PCincr  = 1'b1;  // 读取下一行
+    PCincr  = 1'b0;
+    $display("decoder control opcode = %b", opcode);
     case (opcode)
-      `NOP: ;  // 不做任何处理 NOP
+      `NOP: ;  // 不做任何处理 NOP 
       `ADD: begin  // 010 add
-        write = 1'b1;
-        imm   = 1'b0;
+        write  = 1'b1;
+        imm    = 1'b0;
+        PCincr = 1'b1;  // 读取下一行
       end
-      `ADDI, `MULI, `LOAD: begin  // addI.mulI 是立即数的加和乘 100 代表load
+      `LOAD: begin
+        PCincr = 1'b0;  // LOAD 的时候PCincr 变成0 阻塞住
+        $display("pc control PCincr = %b", PCincr);
         write = 1'b1;
         imm   = 1'b1;
+      end
+      `ADDI, `MULI: begin  // addI.mulI 是立即数的加和乘 100 代表load
+        write  = 1'b1;
+        imm    = 1'b1;
+        PCincr = 1'b1;  // 读取下一行
       end
       default: begin
         $error("unimplemented opcode %h", opcode);

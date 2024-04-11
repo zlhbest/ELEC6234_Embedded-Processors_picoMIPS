@@ -7,6 +7,7 @@ module picoMIPS_tb;
   //Ports
   reg          clk;
   reg          reset;
+  reg          sw8;
   wire [n-1:0] display;
 
 
@@ -15,6 +16,7 @@ module picoMIPS_tb;
   ) picoMIPS_inst (
       .clk    (clk),
       .reset  (reset),
+      .sw8    (sw8),
       .display(display)
   );
 
@@ -27,6 +29,13 @@ module picoMIPS_tb;
   initial begin
     reset = 1;  // 重置复位
     #10ns reset = 0;  // 下拉
+  end
+
+  initial begin
+    sw8 = 1'b1;
+    #10ns sw8 = 1'b0;
+    #10ns sw8 = 1'b1;
+    #10ns sw8 = 1'b0;
   end
 
 
