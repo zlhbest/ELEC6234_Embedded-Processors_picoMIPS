@@ -14,5 +14,5 @@ view wave
 add wave picoMIPS_tb/picoMIPS_inst/*
 
 # run 
-run 100ns
+run 150ns
 

@@ -5,7 +5,7 @@ module picoMIPS #(
     input  logic         reset,
     input  logic         sw8,
     input  logic [n-1:0] sws,     //  这个就是X1与Y1的输入 从开关上输入
-    output logic [n-1:0] display
+    output logic [n-1:0] display  //  这里的输出输出的是ALU中Wdata的值 其实不是真正我们需要的x2与y2  这里的设想是我使用特性寄存器来存储结果并且只显示该寄存器的值
 );
 
   // ALU单元
@@ -59,17 +59,21 @@ module picoMIPS #(
       .imm_or_sw(imm_or_sw),
       .write    (write)
   );
-  // 寄存器
+  // 寄存器 这里简单粗暴的直接链接算了
+  logic signed [n-1:0] reg7, reg8;
   regs #(
       .n(n)
   ) Regs (
       .clk   (clk),
       .write (write),
       .Wdata (Wdata),
+      .reset (reset),
       .Raddr1(instruction_code[Isize-4:Isize-6]),
       .Raddr2(instruction_code[Isize-7:Isize-9]),
       .Rdata1(Rdata1),
-      .Rdata2(Rdata2)
+      .Rdata2(Rdata2),
+      .reg7  (reg7),
+      .reg8  (reg8)
   );
   // ALU
   alu #(
@@ -91,5 +95,10 @@ module picoMIPS #(
   end
 
   // 展示ALU中的结果
-  assign display = Wdata;
+  //   assign display = Wdata;
+  // 这里根据sw的属性来显示display  开关1 reg7 开关0 reg8
+  always_ff @(posedge clk) begin
+    if (sw8) display = reg7;
+    else display = reg8;
+  end
 endmodule
