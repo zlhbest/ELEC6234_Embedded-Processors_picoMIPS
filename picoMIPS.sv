@@ -22,6 +22,7 @@ module picoMIPS #(
   logic [Psize-1:0] ProgAddress;  // 读取的程序地址
   // 开关关下来的时候 pc指示变成1
   always_ff @(negedge sw8) begin
+    $display("change PCincr value from 0 to 1, sw = %b , PCincr = %b", sw8, PCincr);
     PCincr <= 1'b1;
   end
   pc #(

@@ -11,10 +11,11 @@ module pc #(
 );
   // PCincr 只有等于1 的时候才往下走
   always_ff @(posedge clk or posedge reset) begin
+    $display("before pc in PC control PCincr = %b", PCincr);
     if (reset) begin
       PCout = {Psize{1'b0}};  // 如果是复位命令  那么全部变为0
     end else if (PCincr) begin
-      $display("pc in PC control PCincr = %b", PCincr);
+      $display("after pc in PC control PCincr = %b", PCincr);
       PCout = PCout + 1;  // 如果是移位 那么就代表输出加1
     end
   end

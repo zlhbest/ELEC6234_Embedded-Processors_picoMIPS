@@ -32,10 +32,13 @@ module picoMIPS_tb;
   end
 
   initial begin
-    sw8 = 1'b1;
-    #10ns sw8 = 1'b0;
+    sw8 = 1'b0;
+    // 第一次输入
     #10ns sw8 = 1'b1;
-    #10ns sw8 = 1'b0;
+    #20ns sw8 = 1'b0;
+    // 第二次输入
+    #10ns sw8 = 1'b1;
+    #20ns sw8 = 1'b0;
   end
 
 

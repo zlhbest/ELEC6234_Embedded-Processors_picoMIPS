@@ -11,7 +11,7 @@ module decoder (
     ALUFunc = opcode[1:0];  // 操作数的后两位变成了ALU的函数
     imm     = 1'b0;
     write   = 1'b0;
-    PCincr  = 1'b0;
+    PCincr  = 1'b1;  //TODO 这里改成1就对了  虽然不知道为啥但是感觉非常神奇。 等quartus 综合出来电路以后看看为什么
     $display("decoder control opcode = %b", opcode);
     case (opcode)
       `NOP: ;  // 不做任何处理 NOP 
@@ -22,9 +22,8 @@ module decoder (
       end
       `LOAD: begin
         PCincr = 1'b0;  // LOAD 的时候PCincr 变成0 阻塞住
-        $display("pc control PCincr = %b", PCincr);
-        write = 1'b1;
-        imm   = 1'b1;
+        write  = 1'b1;
+        imm    = 1'b1;
       end
       `ADDI, `MULI: begin  // addI.mulI 是立即数的加和乘 100 代表load
         write  = 1'b1;
@@ -35,6 +34,7 @@ module decoder (
         $error("unimplemented opcode %h", opcode);
       end
     endcase
+    $display("pc control PCincr = %b", PCincr);
   end
 
 endmodule
