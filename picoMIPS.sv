@@ -4,6 +4,7 @@ module picoMIPS #(
     input  logic         clk,
     input  logic         reset,
     input  logic         sw8,
+    input  logic [n-1:0] sws,     //  这个就是X1与Y1的输入 从开关上输入
     output logic [n-1:0] display
 );
 
@@ -11,6 +12,7 @@ module picoMIPS #(
   logic [  1:0] ALUfunc;
   logic         imm;
   logic [n-1:0] b_or_imm;
+  logic         imm_or_sw;  //  该数据是来自于程序的立即数还是开关
 
   // 寄存器
   logic         write;
@@ -20,6 +22,7 @@ module picoMIPS #(
   parameter Psize = 4;  // 代表该程序能所有多少行的代码 4代表能搜索 2^4行代码
   logic             PCincr;  // 控制是否移位
   logic [Psize-1:0] ProgAddress;  // 读取的程序地址
+
   // 开关关下来的时候 pc指示变成1
   always_ff @(negedge sw8) begin
     $display("change PCincr value from 0 to 1, sw = %b , PCincr = %b", sw8, PCincr);
@@ -49,11 +52,12 @@ module picoMIPS #(
 
   // 解码器
   decoder Decoder (
-      .opcode (instruction_code[Isize-1:Isize-3]),
-      .ALUFunc(ALUfunc),
-      .PCincr (PCincr),
-      .imm    (imm),
-      .write  (write)
+      .opcode   (instruction_code[Isize-1:Isize-3]),
+      .ALUFunc  (ALUfunc),
+      .PCincr   (PCincr),
+      .imm      (imm),
+      .imm_or_sw(imm_or_sw),
+      .write    (write)
   );
   // 寄存器
   regs #(
@@ -77,10 +81,13 @@ module picoMIPS #(
       .result (Wdata)
   );
 
-  // MUX
+  // MUX imm有两个来源 一个是程序中的立即数 一个是开关中的数字
   always_comb begin
-    if (imm) b_or_imm = instruction_code[n-1:0];
-    else b_or_imm = Rdata2;
+    if (imm) begin
+      // 第二个MUX 选择是来自开关还是程序中的选择器 1 是来自立即数 0代表来自开关
+      if (imm_or_sw) b_or_imm = instruction_code[n-1:0];
+      else b_or_imm = sws;
+    end else b_or_imm = Rdata2;
   end
 
   // 展示ALU中的结果

@@ -8,6 +8,7 @@ module picoMIPS_tb;
   reg          clk;
   reg          reset;
   reg          sw8;
+  reg  [n-1:0] sws;
   wire [n-1:0] display;
 
 
@@ -17,6 +18,7 @@ module picoMIPS_tb;
       .clk    (clk),
       .reset  (reset),
       .sw8    (sw8),
+      .sws    (sws),
       .display(display)
   );
 
@@ -39,6 +41,14 @@ module picoMIPS_tb;
     // 第二次输入
     #10ns sw8 = 1'b1;
     #20ns sw8 = 1'b0;
+  end
+
+  initial begin
+    // 这里是sw组的输入
+    sws = {n{1'b0}};
+    // 输入第一个
+    #10ns sws = 8'b00000010;
+    #40ns sws = 8'b00000010;
   end
 
 
