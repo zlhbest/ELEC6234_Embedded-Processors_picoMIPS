@@ -41,13 +41,15 @@ module picoMIPS_tb;
     // 第二次输入
     #10ns sw8 = 1'b1;
     #20ns sw8 = 1'b0;
+    // 220ns再拉高
+    #220ns sw8 = 1'b1;
   end
 
   initial begin
     // 这里是sw组的输入
     sws = {n{1'b0}};
     // 输入第一个
-    #10ns sws = 8'b00000010;
+    #10ns sws = 8'b00000110;
     #40ns sws = 8'b00000010;
   end
 

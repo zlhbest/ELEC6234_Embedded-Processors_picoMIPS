@@ -67,7 +67,6 @@ module picoMIPS #(
       .clk   (clk),
       .write (write),
       .Wdata (Wdata),
-      .reset (reset),
       .Raddr1(instruction_code[Isize-4:Isize-6]),
       .Raddr2(instruction_code[Isize-7:Isize-9]),
       .Rdata1(Rdata1),
@@ -76,10 +75,11 @@ module picoMIPS #(
       .reg8  (reg8)
   );
   // ALU
+  // 这里需要将a 的data2输入与MUX 的data1 对换 画个图就明白了
   alu #(
       .n(n)
   ) ALU (
-      .a      (Rdata1),
+      .a      (Rdata2),
       .b      (b_or_imm),
       .ALUFunc(ALUfunc),
       .result (Wdata)
@@ -91,14 +91,14 @@ module picoMIPS #(
       // 第二个MUX 选择是来自开关还是程序中的选择器 1 是来自立即数 0代表来自开关
       if (imm_or_sw) b_or_imm = instruction_code[n-1:0];
       else b_or_imm = sws;
-    end else b_or_imm = Rdata2;
+    end else b_or_imm = Rdata1;
   end
 
   // 展示ALU中的结果
   //   assign display = Wdata;
   // 这里根据sw的属性来显示display  开关1 reg7 开关0 reg8
   always_ff @(posedge clk) begin
-    if (sw8) display = reg7;
+    if (!sw8) display = reg7;
     else display = reg8;
   end
 endmodule
