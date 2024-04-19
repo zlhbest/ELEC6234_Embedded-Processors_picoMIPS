@@ -109,3 +109,9 @@
 ```
 
 <img src="./img/picoMIPS_version_3.png" >
+
+
+
+### 改进
+* 去掉零号机寄存器减少操作
+* 去掉加或者乘imm 直接去掉sv文件里面的ADDI与MULI指令， 毕竟这种写指令的方式浪费指令增加了ADDI与MULI 同时还增加了代码行数
