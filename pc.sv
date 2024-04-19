@@ -7,15 +7,15 @@ module pc #(
     input  logic             clk,     // 时钟
     input  logic             reset,   // 复位键
     input  logic             PCincr,  // increment the PC (high) or load the PC (low)
+    input                    flag,
     output logic [Psize-1:0] PCout    // 输出的是指向内存的地址
 );
   // PCincr 只有等于1 的时候才往下走
   always_ff @(posedge clk or posedge reset) begin
-    $display("before pc in PC control PCincr = %b", PCincr);
     if (reset) begin
       PCout = {Psize{1'b0}};  // 如果是复位命令  那么全部变为0
-    end else if (PCincr) begin
-      $display("after pc in PC control PCincr = %b", PCincr);
+      // 这里这样不太合理
+    end else if (PCincr || !flag) begin
       PCout = PCout + 1;  // 如果是移位 那么就代表输出加1
     end
   end

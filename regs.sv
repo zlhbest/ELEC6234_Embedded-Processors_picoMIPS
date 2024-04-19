@@ -8,14 +8,14 @@ module regs #(
     Raddr2,  // 地址一共有几个需要看需要多少个寄存器
     output logic signed [n-1:0] Rdata1,
     Rdata2,  // 输出的数据
-    output logic signed [n-1:0] reg7,
-    reg8
+    output logic signed [n-1:0] x2,
+    y2
 );
-  // TODO 这里假设需要6个寄存器
-  logic [n-1:0] reg_array[7:0];
+  // 这里假设需要7个寄存器 但是这里其实是没有用到0号寄存器的，可以省略
+  logic [n-1:0] reg_array[6:0];
 
-  assign reg7 = reg_array[3];
-  assign reg8 = reg_array[5];
+  assign x2 = reg_array[3];
+  assign y2 = reg_array[5];
 
   // 写入数据 如果允许写入就写到 地址1中   opcode %1 %2 imm 
   always_ff @(posedge clk) begin
