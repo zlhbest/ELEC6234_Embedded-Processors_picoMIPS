@@ -1,5 +1,5 @@
 module prog #(
-    parameter Psize = 6,  // 地址数
+    parameter Psize = 4,  // 地址数
     Isize = 17  // 指令数   3 + 3 + 3 + 8
 ) (
     input  logic [Psize-1:0] address,  // 地址

@@ -11,11 +11,11 @@ module regs #(
     output logic signed [n-1:0] x2,
     y2
 );
-  // 这里假设需要7个寄存器 但是这里其实是没有用到0号寄存器的，可以省略
-  logic [n-1:0] reg_array[6:0];
+  // 这里假设需要7个寄存器 
+  logic [n-1:0] reg_array[5:0];
 
-  assign x2 = reg_array[3];
-  assign y2 = reg_array[5];
+  assign x2 = reg_array[2];
+  assign y2 = reg_array[4];
 
   // 写入数据 如果允许写入就写到 地址1中   opcode %1 %2 imm 
   always_ff @(posedge clk) begin
