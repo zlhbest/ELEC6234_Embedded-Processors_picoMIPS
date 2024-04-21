@@ -12,24 +12,25 @@ module decoder (
     ALUFunc   = opcode[1:0];  // 操作数的后两位变成了ALU的函数
     imm       = 1'b0;
     write     = 1'b0;
-    PCincr    = 1'b1;
+    PCincr    = 1'b0;
     imm_or_sw = 1'b0;
     case (opcode)
-      `NOP: PCincr = 1'b0;
+      `NOP: ;
       // 不做任何处理 NOP 
       `ADD: begin  // 010 add
-        write = 1'b1;
-        imm   = 1'b0;
+        write  = 1'b1;
+        imm    = 1'b0;
+        PCincr = 1'b1;
       end
       `LOAD: begin
-        PCincr = 1'b0;  // LOAD 的时候PCincr 变成0 阻塞住
-        write  = 1'b1;
-        imm    = 1'b1;
+        write = 1'b1;
+        imm   = 1'b1;
       end
       `ADDI, `MULI: begin  // addI.mulI 是立即数的加和乘 100 代表load
         write     = 1'b1;
         imm_or_sw = 1'b1;  // 只有需要读立即数的时候才会变成1
         imm       = 1'b1;
+        PCincr    = 1'b1;
       end
       default: begin
 
