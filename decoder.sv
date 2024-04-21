@@ -12,14 +12,14 @@ module decoder (
     ALUFunc   = opcode[1:0];  // 操作数的后两位变成了ALU的函数
     imm       = 1'b0;
     write     = 1'b0;
-    PCincr    = 1'b1;  //TODO 这里改成1就对了  虽然不知道为啥但是感觉非常神奇。 等quartus 综合出来电路以后看看为什么
+    PCincr    = 1'b1;
     imm_or_sw = 1'b0;
     case (opcode)
-      `NOP: ;  // 不做任何处理 NOP 
+      `NOP: PCincr = 1'b0;
+      // 不做任何处理 NOP 
       `ADD: begin  // 010 add
-        write  = 1'b1;
-        imm    = 1'b0;
-        PCincr = 1'b1;  // 读取下一行
+        write = 1'b1;
+        imm   = 1'b0;
       end
       `LOAD: begin
         PCincr = 1'b0;  // LOAD 的时候PCincr 变成0 阻塞住
@@ -30,9 +30,9 @@ module decoder (
         write     = 1'b1;
         imm_or_sw = 1'b1;  // 只有需要读立即数的时候才会变成1
         imm       = 1'b1;
-        PCincr    = 1'b1;  // 读取下一行
       end
       default: begin
+
       end
     endcase
   end

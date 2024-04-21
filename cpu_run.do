@@ -5,14 +5,13 @@ quit -sim
 vlog *.sv
 
 # 执行模拟
-vsim picoMIPS_tb -voptargs=+acc 
+vsim cpu_tb -voptargs=+acc 
 
 # 打开波形窗口
 view wave
 
 # 添加波形 加载所有的波形
-add wave picoMIPS_tb/picoMIPS_inst/*
-
+add wave cpu_tb/cpu_inst/*
 # run 
-run 300ns
+run 400ns
 

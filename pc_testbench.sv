@@ -1,4 +1,3 @@
-`timescale 1ns / 1ps
 module pc_tb;
 
   // Parameters
@@ -8,6 +7,7 @@ module pc_tb;
   reg              clk;
   reg              reset;
   reg              PCincr;
+  reg              sw8;
   wire [Psize-1:0] PCout;
 
   pc #(
@@ -16,6 +16,7 @@ module pc_tb;
       .clk   (clk),
       .reset (reset),
       .PCincr(PCincr),
+      .flag  (sw8),
       .PCout (PCout)
   );
 
@@ -40,12 +41,14 @@ module pc_tb;
   // 定义进位
   initial begin
     PCincr = 0;
-    #10ns PCincr = 1;
-    #10ns PCincr = 1;
-    #10ns PCincr = 1;
-    #10ns PCincr = 1;
-    #10ns PCincr = 1;
-    $stop;
+    #70ns PCincr = 1;
+  end
+
+  initial begin
+    sw8 = 1;
+    #20ns sw8 = 0;
+    #20ns sw8 = 1;
+    #20ns sw8 = 0;
   end
 
 

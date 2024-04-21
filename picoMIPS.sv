@@ -13,7 +13,7 @@ module picoMIPS #(
     output logic [6:0] sign         // 符号
 );
 
-  // 为了防止抖动
+  // 为了防止抖动  模拟的时候去掉
   logic slow_clk;
   counter c (
       .fastclk(clk),

@@ -22,7 +22,6 @@ module cpu #(
   parameter Psize = 4;  // 代表该程序能所有多少行的代码 4代表能搜索 2^4行代码
   logic             PCincr;  // 控制是否移位
   logic [Psize-1:0] ProgAddress;  // 读取的程序地址
-
   pc #(
       .Psize(Psize)
   ) progCounter (
@@ -35,7 +34,7 @@ module cpu #(
 
 
   // 程序内存
-  parameter Isize = n + 9;  // 一行有多少位 n代表数据位数 加上 3位的操作数 3位的寄存器地址 3位的寄存器地址
+  parameter Isize = n + 7;  // 一行有多少位 n代表数据位数 加上 3位的操作数 3位的寄存器地址 3位的寄存器地址
   logic [Isize-1:0] instruction_code;  //指令
   prog #(
       .Psize(Psize),
@@ -63,8 +62,8 @@ module cpu #(
       .clk   (clk),
       .write (write),
       .Wdata (Wdata),
-      .Raddr1(instruction_code[Isize-4:Isize-6]),
-      .Raddr2(instruction_code[Isize-7:Isize-9]),
+      .Raddr1(instruction_code[Isize-4:Isize-5]),
+      .Raddr2(instruction_code[Isize-6:Isize-7]),
       .Rdata1(Rdata1),
       .Rdata2(Rdata2),
       .x2    (x2),
@@ -94,7 +93,7 @@ module cpu #(
   //   assign display = Wdata;
   // 这里根据sw的属性来显示display  开关1 reg7 开关0 reg8
   always_ff @(posedge clk) begin
-    if (!sw8) display = x2;
-    else display = y2;
+    if (!sw8) display <= x2;
+    else display <= y2;
   end
 endmodule
