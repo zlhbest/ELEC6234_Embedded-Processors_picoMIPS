@@ -23,7 +23,7 @@ module picoMIPS #(
   cpu #(
       .n(n)
   ) CPU (
-      .clk    (slow_clk),
+      .clk    (clk),
       .reset  (reset),
       .sw8    (sw8),
       .sws    (sws),

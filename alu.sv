@@ -11,7 +11,7 @@ module alu #(
   always_latch begin
     result = 0;
     case (ALUFunc)
-      `RB: result = b;
+      `RI: result = b;  // 读立即数
       `ADD: begin
         result = a + b;
       end
