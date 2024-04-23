@@ -10,15 +10,15 @@ module pc #(
     input  logic             flag,
     output logic [Psize-1:0] PCout    // 输出的是指向内存的地址
 );
-  logic add;
-  logic sign;
+  logic add = 0;
+  logic sign = 0;
   //TODO 下降沿的时候触发 但是这里综合出来的会有问题 他也会在上升沿进行触发 原理没有搞懂，等后面深入学习吧
-  always_ff @(negedge flag, posedge reset, posedge sign) begin
+  always_ff @(posedge flag, posedge reset, posedge sign) begin
     if (reset) add <= 0;
     else begin
       if (sign) add <= 0;
       // 当sign为0 flag为0的时候才执行
-      else if (!flag) add <= 1;
+      else if (flag) add <= 1;
     end
   end
   // PCincr 只有等于1 的时候才往下走  PCincr控制是否阻塞住 要求是

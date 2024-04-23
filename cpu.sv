@@ -28,7 +28,7 @@ module cpu #(
       .clk   (clk),
       .reset (reset),
       .PCincr(PCincr),
-      .flag  (sw8),
+      .flag  (~sw8),
       .PCout (ProgAddress)
   );
 

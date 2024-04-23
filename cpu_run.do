@@ -12,6 +12,7 @@ view wave
 
 # 添加波形 加载所有的波形
 add wave cpu_tb/cpu_inst/*
+add wave cpu_tb/cpu_inst/progCounter/*
 # run 
 run 400ns
 
