@@ -4,7 +4,7 @@ module regs #(
     input  logic                clk,
     input  logic                write,
     input  logic        [n-1:0] Wdata,
-    input  logic        [  2:0] Raddr1,
+    input  logic        [  1:0] Raddr1,  // 只需要两位即可
     Raddr2,  // 地址一共有几个需要看需要多少个寄存器
     output logic signed [n-1:0] Rdata1,
     Rdata2,  // 输出的数据
