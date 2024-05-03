@@ -25,8 +25,7 @@ module alu_tb;
     b       = 8'b00010100;  //20
     #10ns ALUFunc = 2'b11;  //MUL
     a = 8'b01100000;  //0.75
-    b = 8'b00000101;  //5
-    $stop;
+    b = 8'b00000101;  //5;
   end
 
 endmodule

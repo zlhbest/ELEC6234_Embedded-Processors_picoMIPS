@@ -16,11 +16,6 @@ module decoder_tb;
       .write  (write)
   );
 
-  initial begin
-    // 产生vcd波形图 vcd flush
-    $dumpfile("decoder.vcd");
-    $dumpvars(1, decoder_inst);  //将所有的变量都加进来
-  end
 
   initial begin
     opcode = 3'b000;
